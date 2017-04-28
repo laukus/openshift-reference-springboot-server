@@ -9,7 +9,7 @@ buildscript {
   dependencies {
     classpath(
         "org.springframework.boot:spring-boot-gradle-plugin:1.5.2.RELEASE",
-        'no.skatteetaten.aurora.gradle.plugins:aurora-gradle-plugin:feature_staging-SNAPSHOT',
+        'no.skatteetaten.aurora.gradle.plugins:aurora-gradle-plugin:1.1.0',
     )
   }
 }
@@ -17,10 +17,11 @@ buildscript {
 ext.aurora = [
 ]
 
+group = 'ske.aurora.openshift.referanse'
+
 apply plugin: 'no.skatteetaten.plugins.aurora'
 apply plugin: 'org.springframework.boot'
 
-group = 'ske.aurora.openshift.referanse'
 
 dependencies {
   compile(
