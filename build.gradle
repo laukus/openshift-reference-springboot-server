@@ -8,40 +8,32 @@ buildscript {
 
   dependencies {
     classpath(
-        "org.springframework.boot:spring-boot-gradle-plugin:1.5.2.RELEASE",
+        "org.springframework.boot:spring-boot-gradle-plugin:1.5.3.RELEASE",
         'no.skatteetaten.aurora.gradle.plugins:aurora-gradle-plugin:1.1.0',
     )
   }
 }
 
 ext.aurora = [
+    stagingProfileId: "8815b545f21bd"
 ]
+
+ext['flyway.version'] = '4.2.0'
 
 group = 'ske.aurora.openshift.referanse'
 
 apply plugin: 'no.skatteetaten.plugins.aurora'
 apply plugin: 'org.springframework.boot'
 
-
 dependencies {
   compile(
-      "org.springframework.boot:spring-boot-starter-web",
-      "org.springframework.boot:spring-boot-starter-actuator",
-      "org.springframework.boot:spring-boot-starter-hateoas",
-      "org.springframework.boot:spring-boot-starter-security",
-      "org.springframework.boot:spring-boot-starter-jdbc",
-      "ske.aurora:aurora-header-mdc-filter:1.1.0",
-      "ske.aurora.springboot.prometheus:spring-boot-prometheus:3.1.2",
-      "com.ryantenney.metrics:metrics-spring:3.1.2",
-      "com.oracle:ojdbc7:12.1.0.2",
-      "org.flywaydb:flyway-core:4.0.3"
+      "ske.aurora.springboot:aurora-spring-boot-starter:1.0.0",
+      "ske.aurora.springboot:aurora-oracle-spring-boot-starter:1.0.0"
   )
 
   testCompile(
-      "org.springframework.boot:spring-boot-starter-test",
-      "org.spockframework:spock-spring:1.1-groovy-2.4-rc-3",
-      "org.springframework.restdocs:spring-restdocs-mockmvc:1.1.0.RELEASE",
-      "org.springframework.security:spring-security-test",
+      "ske.aurora.springboot:aurora-spock-spring-boot-starter:1.0.0"
+
   )
 }
 
