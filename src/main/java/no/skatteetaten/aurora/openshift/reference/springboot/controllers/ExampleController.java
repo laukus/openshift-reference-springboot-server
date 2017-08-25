@@ -1,5 +1,8 @@
 package no.skatteetaten.aurora.openshift.reference.springboot.controllers;
 
+import static no.skatteetaten.aurora.openshift.reference.springboot.util.Operation.StatusValue.CRITICAL;
+import static no.skatteetaten.aurora.openshift.reference.springboot.util.Operation.StatusValue.OK;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
@@ -47,16 +50,15 @@ public class ExampleController {
                 Thread.currentThread().interrupt();
                 throw new RuntimeException("Sleep interupted", e);
             }
-            return "sometimes i succeed";
 
-/*
+
             if (sleepTime % 2 == 0) {
-                status(SOMETIMES, OK);
+                opt.status(SOMETIMES, OK);
                 return "sometimes i succeed";
             } else {
-                status(SOMETIMES, CRITICAL);
+                opt.status(SOMETIMES, CRITICAL);
                 throw new RuntimeException("Sometimes i fail");
-            }*/
+            }
         });
     }
 }
