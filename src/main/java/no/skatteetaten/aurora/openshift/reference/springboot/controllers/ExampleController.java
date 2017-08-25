@@ -35,7 +35,7 @@ public class ExampleController {
     }
 
 
-    @Timed(quantiles = {0.5, 0.95})
+    @Timed
     @GetMapping("/api/example/sometimes")
     public String example() {
         return opt.withMetrics(SOMETIMES, () -> {
