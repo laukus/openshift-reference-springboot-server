@@ -22,8 +22,12 @@ import io.micrometer.spring.web.ControllerMetrics;
 @ControllerAdvice
 public class ErrorHandler extends ResponseEntityExceptionHandler {
 
-    @Autowired
-    ControllerMetrics metrics;
+    private ControllerMetrics metrics;
+
+    public ErrorHandler(ControllerMetrics metrics) {
+
+        this.metrics = metrics;
+    }
 
     @ExceptionHandler({ RuntimeException.class })
     protected ResponseEntity<Object> handleGenericError(RuntimeException e, WebRequest request) {
