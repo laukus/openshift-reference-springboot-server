@@ -1,7 +1,7 @@
 package no.skatteetaten.aurora.openshift.reference.springboot.controllers;
 
-import static no.skatteetaten.aurora.openshift.reference.springboot.util.Operation.StatusValue.CRITICAL;
-import static no.skatteetaten.aurora.openshift.reference.springboot.util.Operation.StatusValue.OK;
+import static no.skatteetaten.aurora.AuroraMetrics.StatusValue.CRITICAL;
+import static no.skatteetaten.aurora.AuroraMetrics.StatusValue.OK;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -10,7 +10,7 @@ import org.springframework.web.client.RestTemplate;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import io.micrometer.core.annotation.Timed;
-import no.skatteetaten.aurora.openshift.reference.springboot.util.Operation;
+import no.skatteetaten.aurora.AuroraMetrics;
 
 /*
  * An example controller that shows how to do a REST call and how to do an operation with a operations metrics
@@ -22,26 +22,24 @@ public class ExampleController {
     private static final String SOMETIMES = "sometimes";
     private static final int SECOND = 1000;
     private RestTemplate restTemplate;
-    private Operation opt;
+    private AuroraMetrics metrics;
 
-    public ExampleController(RestTemplate restTemplate, Operation opt) {
+    public ExampleController(RestTemplate restTemplate, AuroraMetrics metrics) {
 
         this.restTemplate = restTemplate;
-        this.opt = opt;
+        this.metrics = metrics;
     }
 
-    @Timed()
+    @Timed
     @GetMapping("/api/example/ip")
     public String ip() {
         JsonNode forEntity = restTemplate.getForObject("http://httpbin.org/ip", JsonNode.class);
         return forEntity.get("origin").textValue();
     }
-
-
     @Timed
     @GetMapping("/api/example/sometimes")
     public String example() {
-        return opt.withMetrics(SOMETIMES, () -> {
+        return metrics.withMetrics(SOMETIMES, () -> {
             long sleepTime = (long) (Math.random() * SECOND);
 
             try {
@@ -51,12 +49,11 @@ public class ExampleController {
                 throw new RuntimeException("Sleep interupted", e);
             }
 
-
             if (sleepTime % 2 == 0) {
-                opt.status(SOMETIMES, OK);
+                metrics.status(SOMETIMES, OK);
                 return "sometimes i succeed";
             } else {
-                opt.status(SOMETIMES, CRITICAL);
+                metrics.status(SOMETIMES, CRITICAL);
                 throw new RuntimeException("Sometimes i fail");
             }
         });
