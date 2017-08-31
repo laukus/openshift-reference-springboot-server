@@ -1,10 +1,23 @@
 #!/usr/bin/env groovy
 
-def jenkinsfile
-def version='v3.1.0'
+def version = 'v3.1.1'
 fileLoader.withGit('https://git.aurora.skead.no/scm/ao/aurora-pipeline-scripts.git', version) {
    jenkinsfile = fileLoader.load('templates/leveransepakke')
 }
 
-def overrides = [piTests: false, credentialsId: "aurora-bitbucket"]
+def systemtest = [
+  name : 'systemtest',
+  setupCommand: """aoc setup openshift/@TEST_NAME@ \
+                   -f about.json '{ "envName" : "-@TEST_NAME@-@TEST_ID@" }' \
+                   -f reference.json '{ "build" : { "VERSION" : "@TEST_ID@" }}'""",
+   npmScripts : ['test']
+]
+
+def overrides = [
+  affiliation: "paas"
+  piTests: false,
+  credentials: "github",
+  testStages:[systemtest]
+  ]
+
 jenkinsfile.run(version, overrides)
