@@ -1,5 +1,7 @@
 package no.skatteetaten.aurora.openshift.reference.springboot.controllers;
 
+import java.util.Map;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -25,12 +27,7 @@ public class CounterController {
 
     @Timed
     @GetMapping("/api/counter")
-    public String counter() {
-
-        String value =
-            service.getAndIncrementCounter().get("value").toString();
-
-        return value;
+    public Map<String, Object> counter() {
+        return service.getAndIncrementCounter();
     }
-
 }
