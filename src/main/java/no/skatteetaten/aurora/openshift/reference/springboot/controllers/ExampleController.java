@@ -41,7 +41,8 @@ public class ExampleController {
         response.put("ip", forEntity.get("origin").textValue());
         return response;
     }
-@Timed
+
+    @Timed
     @GetMapping("/api/example/sometimes")
     public Map<String, Object> example() {
         return metrics.withMetrics(SOMETIMES, () -> {
