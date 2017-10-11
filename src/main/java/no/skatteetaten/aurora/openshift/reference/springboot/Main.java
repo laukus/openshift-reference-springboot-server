@@ -6,7 +6,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import no.skatteetaten.aurora.annotations.AuroraApplication;
 
 @SpringBootApplication
-@AuroraApplication
 public class Main {
 
     protected Main() {
