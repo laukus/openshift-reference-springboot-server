@@ -7,6 +7,11 @@ info:
 spring:
     profiles:
         active: local
+    metrics:
+        prometheus:
+            timerPercentilesMax: "PT5S"
+            timerPercentilesMin: "PT0.1S"
+
 
 logging:
     level:
