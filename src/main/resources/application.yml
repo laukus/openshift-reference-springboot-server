@@ -16,6 +16,7 @@ spring:
 logging:
     level:
       ske.aurora: DEBUG
+      no.skatteetaten: INFO
       org:
         springframework: WARN
         apache.catalina: WARN
